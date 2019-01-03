@@ -7,7 +7,7 @@ import java.util.List;
 public class TesteBancoJDBC {
 
     @Test
-    public void initBanco(){
+    public void initBanco() {
         UserposDAO userposDAO = new UserposDAO();
         Userposjava userposjava = new Userposjava();
 
@@ -19,15 +19,15 @@ public class TesteBancoJDBC {
     }
 
     @Test
-    public void listar(){
+    public void listar() {
 
         UserposDAO userposDAO = new UserposDAO();
 
         try {
             List<Userposjava> list = userposDAO.listar();
 
-            for (Userposjava u : list){
-                System.out.println(u.toString()+"\n");
+            for (Userposjava u : list) {
+                System.out.println(u.toString() + "\n");
             }
 
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class TesteBancoJDBC {
     }
 
     @Test
-    public void buscar(){
+    public void buscar() {
 
         UserposDAO userposDAO = new UserposDAO();
 
@@ -48,5 +48,18 @@ public class TesteBancoJDBC {
         }
     }
 
+    @Test
+    public void atualizar() {
 
+        try {
+            UserposDAO userposDAO = new UserposDAO();
+            Userposjava objetoBanco = userposDAO.buscarById(4L);
+
+            objetoBanco.setNome("Nome mudado com o atualizar do DAO");
+            userposDAO.atualizar(objetoBanco);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

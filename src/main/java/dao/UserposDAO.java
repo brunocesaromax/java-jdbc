@@ -18,7 +18,7 @@ public class UserposDAO {
         this.connection = SingleConnection.getConnection();
     }
 
-    public void salvar(Userposjava userposjava){
+    public void salvar(Userposjava userposjava) {
 
         try {
             String sql = "insert into userposjava (id, nome, email) values (?,?,?)";
@@ -43,7 +43,7 @@ public class UserposDAO {
 
     }
 
-    public List<Userposjava> listar() throws Exception{
+    public List<Userposjava> listar() throws Exception {
 
         List<Userposjava> list = new ArrayList<Userposjava>();
 
@@ -51,7 +51,7 @@ public class UserposDAO {
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultado = statement.executeQuery();
 
-        while(resultado.next()){ // Enquanto houver novos objetos no resultado fazer iteração
+        while (resultado.next()) { // Enquanto houver novos objetos no resultado fazer iteração
 
             Userposjava userposjava = new Userposjava();
             userposjava.setId(resultado.getLong("id"));
@@ -64,15 +64,15 @@ public class UserposDAO {
 
     }
 
-    public Userposjava buscarById(Long id) throws Exception{
+    public Userposjava buscarById(Long id) throws Exception {
 
-       Userposjava retorno = new Userposjava();
+        Userposjava retorno = new Userposjava();
 
-        String sql = "select * from userposjava where id = "+id;
+        String sql = "select * from userposjava where id = " + id;
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultado = statement.executeQuery();
 
-        while(resultado.next()){ // Retorna apenas um ou nenhum objeto
+        while (resultado.next()) { // Retorna apenas um ou nenhum objeto
 
             retorno.setId(resultado.getLong("id"));
             retorno.setNome(resultado.getString("nome"));
@@ -81,6 +81,27 @@ public class UserposDAO {
 
         return retorno;
 
+    }
+
+    public void atualizar(Userposjava userposjava) {
+
+        try {
+
+            String sql = "update userposjava set nome = ? where id = " + userposjava.getId();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userposjava.getNome());
+            statement.execute();
+            connection.commit();
+
+        } catch (SQLException e) {
+
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
     }
 
 }
