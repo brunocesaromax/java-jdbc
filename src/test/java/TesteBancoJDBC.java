@@ -1,4 +1,5 @@
 import dao.UserposDAO;
+import model.Telefone;
 import model.Userposjava;
 import org.junit.Test;
 
@@ -75,6 +76,18 @@ public class TesteBancoJDBC {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void salvarTelefone(){
+
+        Telefone telefone = new Telefone();
+        telefone.setNumero("32994478");
+        telefone.setTipo("telefone");
+        telefone.setUserposjava_id(10L);
+
+        UserposDAO userposDAO = new UserposDAO();
+        userposDAO.salvarTelefone(telefone);
     }
 
 }
