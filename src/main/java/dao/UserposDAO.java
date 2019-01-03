@@ -29,7 +29,7 @@ public class UserposDAO {
 
         } catch (SQLException e) {
             try {
-                connection.rollback();// Reverte operação
+                connection.rollback();// Reverte operação realizada
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
