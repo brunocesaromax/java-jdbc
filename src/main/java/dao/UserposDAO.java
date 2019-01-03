@@ -21,11 +21,10 @@ public class UserposDAO {
     public void salvar(Userposjava userposjava) {
 
         try {
-            String sql = "insert into userposjava (id, nome, email) values (?,?,?)";
+            String sql = "insert into userposjava (nome, email) values (?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, userposjava.getId());
-            statement.setString(2, userposjava.getNome());
-            statement.setString(3, userposjava.getEmail());
+            statement.setString(1, userposjava.getNome());
+            statement.setString(2, userposjava.getEmail());
             statement.execute();
             connection.commit();// Salva no banco
 
@@ -104,4 +103,20 @@ public class UserposDAO {
         }
     }
 
+    public void deletarById (Long id){
+
+        try {
+
+            String sql = "delete from userposjava where id = "+id;
+            PreparedStatement statement =connection.prepareStatement(sql);
+            statement.execute();
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
 }
