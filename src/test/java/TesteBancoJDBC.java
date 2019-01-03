@@ -1,4 +1,5 @@
 import dao.UserposDAO;
+import model.BeanUserTelefone;
 import model.Telefone;
 import model.Userposjava;
 import org.junit.Test;
@@ -90,4 +91,16 @@ public class TesteBancoJDBC {
         userposDAO.salvarTelefone(telefone);
     }
 
+    @Test
+    public void telefonesUsuarios(){ // Resultado de uma busca com inner join, porém é obrigatório o uso de um novo objeto (Bean...)
+        
+        UserposDAO userposDAO = new UserposDAO();
+        List<BeanUserTelefone> beanUserTelefones = userposDAO.listaUserTelefone(10L);
+
+        for (BeanUserTelefone bean: beanUserTelefones){
+            System.out.println(bean.toString()+"\n");
+
+        }
+    }
+    
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import conexaojdbc.SingleConnection;
+import model.BeanUserTelefone;
 import model.Telefone;
 import model.Userposjava;
 
@@ -130,12 +131,12 @@ public class UserposDAO {
         }
     }
 
-    public void deletarById (Long id){
+    public void deletarById(Long id) {
 
         try {
 
-            String sql = "delete from userposjava where id = "+id;
-            PreparedStatement statement =connection.prepareStatement(sql);
+            String sql = "delete from userposjava where id = " + id;
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.execute();
             connection.commit();
 
@@ -144,6 +145,35 @@ public class UserposDAO {
         }
 
 
-
     }
+
+    public List<BeanUserTelefone> listaUserTelefone(Long idUserposjava) {
+
+        List<BeanUserTelefone> beanUserTelefones = new ArrayList<BeanUserTelefone>();
+
+        String sql = " select nome, numero, email from telefone as t ";
+        sql += " inner join userposjava as u ";
+        sql += " on t.userposjava_id = u.id ";
+        sql += " where u.id = " + idUserposjava;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultado = statement.executeQuery();
+
+            while (resultado.next()){
+                BeanUserTelefone beanUserTelefone = new BeanUserTelefone();
+                beanUserTelefone.setEmail(resultado.getString("email"));
+                beanUserTelefone.setNome(resultado.getString("nome"));
+                beanUserTelefone.setNumero(resultado.getString("numero"));
+                beanUserTelefones.add(beanUserTelefone);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return beanUserTelefones;
+    }
+
 }
