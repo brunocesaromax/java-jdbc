@@ -92,7 +92,7 @@ public class TesteBancoJDBC {
     }
 
     @Test
-    public void telefonesUsuarios(){ // Resultado de uma busca com inner join, porém é obrigatório o uso de um novo objeto (Bean...)
+    public void telefonesUsuarios()  { // Resultado de uma busca com inner join, porém é obrigatório o uso de um novo objeto (Bean...)
         
         UserposDAO userposDAO = new UserposDAO();
         List<BeanUserTelefone> beanUserTelefones = userposDAO.listaUserTelefone(10L);
@@ -101,6 +101,13 @@ public class TesteBancoJDBC {
             System.out.println(bean.toString()+"\n");
 
         }
+    }
+
+    @Test
+    public void deletarPorTelefones(){
+
+        UserposDAO userposDAO = new UserposDAO();
+        userposDAO.deletarTelefonesByIdUsuario(10L);
     }
     
 }

@@ -147,6 +147,38 @@ public class UserposDAO {
 
     }
 
+    public void deletarTelefonesByIdUsuario(Long idUsuario) {
+
+        try {
+
+            String sqlTelefone = "delete from telefone where userposjava_id = " + idUsuario;
+            String sqlUser = "delete from userposjava where id = " + idUsuario;
+            PreparedStatement statement;
+
+            //Primeiro deleta o objeto filho (Telefone)
+            statement = connection.prepareStatement(sqlTelefone);
+            statement.executeUpdate();
+            connection.commit();
+
+            //Posteriormente deleta a classe pai (userposjava)
+            statement = connection.prepareStatement(sqlUser);
+            statement.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+
+    }
+
     public List<BeanUserTelefone> listaUserTelefone(Long idUserposjava) {
 
         List<BeanUserTelefone> beanUserTelefones = new ArrayList<BeanUserTelefone>();
